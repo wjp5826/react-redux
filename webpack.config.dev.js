@@ -3,10 +3,14 @@ var webpack = require('webpack');
 var HtmlWebpackPlugin  = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var pxtorem = require('postcss-pxtorem');
+// 打开浏览器
+var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
+    devtool: 'cheap-moudle-eval-source-map',
     entry: {
-        app: './src/index.js'
+        app: './src/entry.js',
+        vendor: ['react', 'react-dom']
     },
     output: {
         path: '/',
@@ -14,56 +18,53 @@ module.exports = {
         filename: '[name].[hash].js',
     },
     plugins : [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+        }),
         new HtmlWebpackPlugin({
             title: 'react-redux',
             filename: '/index.html',
             template: 'index.html',
             inject: 'body'
         }),
+        new OpenBrowserPlugin({ url: 'http://localhost:3011' }),
     ],
+    resolve: {
+        alias: {
+            constants: path.resolve(__dirname, 'src/constants')
+        }
+    },
     module: {
         rules: [
             {
-                exclude: [/\.js$/,/\.html$/,/\.json$/],
-                loader: 'file-loader',
-                options: {
-                    name: 'static/[name].[hash:8].[ext]'
-                }
-            },
-            {
-                test: [/\.bmp$/,/\.gif$/,/\.jpe?g$/,/\.png$/],
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10000,
-                            name: 'static/[name].[hash:8].[ext]'
-                        }
-                    }
-                ]
-            },{
                 test: /\.(js|jsx)$/,
                 exclude: /(node_modules | bower_components)/,
                 use: 'babel-loader'
-            },{
+            },
+            {
                 test: /\.(less|css)$/,
+                exclude: /(node_modules | bower_components)/,
                 use: ['style-loader', 'css-loader', 'less-loader']
-            },{
+            },
+            {
                 test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
                             limit:10000,
-                            name: ['files/[md5:hash:base64:10].[ext]']
+                            name: '[md5:hash:base64:10].[ext]'
                         }
                     }
                 ]
-            },{
+            },
+            {
                 test: /\.css$/,
                 use: [
                     { loader: 'style-loader' },
-                    { loader: 'css-loader', options: { importLoaders: 1 } },
+                    { loader: 'css-loader', options: { importLoaders: 1, modules: true, localIdentName: '[path][name]_[local]--[hash:base64:5]' } },
                     { 
                         loader: 'postcss-loader',
                         options : {
