@@ -4,4 +4,4 @@ const rootReducers = {
   home
 };
 
-export default rootReducers
+export default rootReducers;

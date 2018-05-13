@@ -14,16 +14,15 @@ const history = createHistory();
 class Routers extends React.Component {
     render() {
         return (
-            <BrowserRouter>
+            <HashRouter>
                 <App>
                     <Switch>
-                        {/* <Route exact path="/" component={Home} /> */}
                         <Route exact path="/" render={() => (<Redirect to="/home" />)} />
-                        <Route exact path="/home" component={Home} />
+                        <Route path="/home" component={Home} />
                         <Route path="/second" component={Result} />
                     </Switch>
                 </App>
-            </BrowserRouter>
+            </HashRouter>
         )
     }
 }

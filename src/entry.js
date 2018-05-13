@@ -23,8 +23,8 @@ const store = createStore(
 )
 
 ReactDOM.render(
-        <Provider store={store}>
-            <Router />
-        </Provider>,
+    <Provider store={store}>
+        <Router />
+    </Provider>,
     document.getElementById('root')
 )

@@ -1,10 +1,14 @@
+/**
+ * 应用的最上层组件
+ */
 import React from 'react';
 
 class Result extends React.Component {
-  render(){
+  render() {
     return (
       <div>
-      {this.props.children}        
+        <h1>this is app component</h1>
+        {this.props.children}
       </div>
     )
   }

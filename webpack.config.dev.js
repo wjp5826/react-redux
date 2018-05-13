@@ -18,11 +18,10 @@ module.exports = {
         filename: '[name].[hash].js',
     },
     plugins : [
-        new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor',
-        }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'vendor',
+        // }),
         new HtmlWebpackPlugin({
             title: 'react-redux',
             filename: '/index.html',
@@ -30,6 +29,7 @@ module.exports = {
             inject: 'body'
         }),
         new OpenBrowserPlugin({ url: 'http://localhost:3011' }),
+        new webpack.HotModuleReplacementPlugin(),
     ],
     resolve: {
         alias: {
@@ -41,7 +41,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /(node_modules | bower_components)/,
-                use: 'babel-loader'
+                use: "babel-loader"
             },
             {
                 test: /\.(less|css)$/,
