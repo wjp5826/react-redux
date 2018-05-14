@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Route, Link, Switch, HashRouter, BrowserRouter } from 'react-router-dom';
-import www from './www.jpg';
+import { Route, Link } from 'react-router-dom';
 import styles from './index.less';
-import second from './second.less';
 import Result from '../result/result';
 import { cookie } from 'utilfunction';
 import { Map } from 'immutable';
@@ -28,10 +26,8 @@ class Home extends React.Component {
                     <li><Link to={`/home/one`}>link1</Link></li>
                     <li><Link to={`${this.props.match.url}/third`}>link2</Link></li>
                 </ul>
-                {/* <Switch> */}
                 <Route path={`/home/one`} component={Second} />
                 <Route path={`${this.props.match.url}/third`} component={Third} />
-                {/* </Switch> */}
             </div>
         )
     }
