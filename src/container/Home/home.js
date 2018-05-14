@@ -14,7 +14,6 @@ class Home extends React.Component {
         }
     }
     render() {
-        console.log('url', this.props.match.url)
         return (
             <div className={styles.wrap}>
                 <h1>{this.state.data.get('name')}</h1>
@@ -24,6 +23,7 @@ class Home extends React.Component {
                     </div>
                 <ul>
                     <li><Link to={`/home/one`}>link1</Link></li>
+                    <li><Link to={`/second`}>to res</Link></li>
                     <li><Link to={`${this.props.match.url}/third`}>link2</Link></li>
                 </ul>
                 <Route path={`/home/one`} component={Second} />

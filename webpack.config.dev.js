@@ -15,6 +15,7 @@ module.exports = {
     output: {
         path: '/',
         publicPath: '/',
+        chunkFilename: '[name].bundle.js',
         filename: '[name].[hash].js',
     },
     plugins : [
