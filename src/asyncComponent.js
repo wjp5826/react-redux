@@ -3,18 +3,20 @@ import React from 'react';
 export default function asyncComponent(importComponent) {
   class AsyncComponent extends React.Component {
     constructor(props){
-      super(props)
+      super(props);
       this.state = {
-        component: null,
+        Component: null,
       }
     }
     componentDidMount() {
-      const { default: component } = importComponent();
-      this.setState({ component });
+       importComponent().then(module => {
+        // const { default: component } = res;
+         this.setState({ Component: module.default });
+       });
     }
     render(){
-      const { component } = this.state;
-      return component ? <component { ...this.props } /> : null; 
+      const { Component } = this.state;
+      return Component ? <Component { ...this.props } /> : null;
     }
   }
   return AsyncComponent;

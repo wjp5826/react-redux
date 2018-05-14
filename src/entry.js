@@ -20,11 +20,11 @@ const store = createStore(
     combineReducers(rootReducers),
     Map({}),
     composeWithDevTools(applyMiddleware(...middlewares))
-)
+);
 
 ReactDOM.render(
     <Provider store={store}>
         <Router />
     </Provider>,
     document.getElementById('root')
-)
+);

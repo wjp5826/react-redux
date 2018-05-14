@@ -5,9 +5,10 @@ import createHistory from 'history/createHashHistory';
 import asyncComponent from './asyncComponent';
 import App from './container/app';
 
-import Home from './container/Home/home';
-import Result from './container/result/result';
-// const Home = asyncComponent(() => import(/* webpackChunkName: "Home" */'./container/Home/home'));
+// import Home from './container/Home/home';
+// import Result from './container/result/result';
+const Result = asyncComponent(() => import(/* webpackChunkName: "result" */ './container/result/result'));
+const Home = asyncComponent(() => import(/* webpackChunkName: "Home" */ './container/Home/home'));
 
 const history = createHistory();
 
@@ -18,8 +19,8 @@ class Routers extends React.Component {
                 <App>
                     <Switch>
                         <Route exact path="/" render={() => (<Redirect to="/home" />)} />
-                        <Route path="/home" component={Home} />
-                        <Route path="/second" component={Result} />
+                        <Route path="/home" component={Result} />
+                        <Route path="/second" component={Home} />
                     </Switch>
                 </App>
             </HashRouter>
