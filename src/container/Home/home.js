@@ -5,7 +5,14 @@ import styles from './index.less';
 import Result from '../result/result';
 import { cookie } from 'utilfunction';
 import { Map } from 'immutable';
+import { saveName } from '../../actions/HomeAction';
 
+@connect(state => {
+    const home = state.get('home');
+    return {
+        name: home.get('name'),
+    }
+}, dispatch => ({ dispatch }))
 class Home extends React.Component {
     constructor() {
         super();
@@ -14,10 +21,11 @@ class Home extends React.Component {
         }
     }
     render() {
+        const { dispatch } = this.props;
         return (
             <div className={styles.wrap}>
                 <h1>{this.state.data.get('name')}</h1>
-                <button onClick={() => alert('hello')} ref={button => { this.btn = button }}>hello</button>
+                <button onClick={() => dispatch(saveName('李四'))} ref={button => { this.btn = button }}>hello</button>
                 <div className={styles.wrap}>
                     hello
                     </div>
@@ -38,10 +46,5 @@ const Second = () => {
 const Third = () => {
     return <div>third</div>
 }
-function mapStateToProps(state) {
-    console.log('state', state.get('name'))
-    return {
-        name: state.get('name'),
-    }
-}
-export default connect(mapStateToProps)(Home);
+
+export default Home;
