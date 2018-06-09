@@ -7,9 +7,10 @@ var pxtorem = require('postcss-pxtorem');
 var OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 module.exports = {
+    mode: 'development',
     devtool: 'cheap-moudle-eval-source-map',
     entry: {
-        app: './src/entry.js',
+        app: ['webpack-dev-server/client?http://localhost:3011/', 'webpack/hot/dev-server','./src/entry.js'],
         vendor: ['react', 'react-dom']
     },
     output: {
@@ -20,9 +21,6 @@ module.exports = {
     },
     plugins : [
         new webpack.NamedModulesPlugin(),
-        // new webpack.optimize.CommonsChunkPlugin({
-        //     name: 'vendor',
-        // }),
         new HtmlWebpackPlugin({
             title: 'react-redux',
             filename: '/index.html',
@@ -34,14 +32,22 @@ module.exports = {
     ],
     resolve: {
         alias: {
-            constants: path.resolve(__dirname, 'src/constants')
-        }
+            constants: path.resolve(__dirname, 'src/constants'),
+            react: path.resolve(__dirname, './node_modules/react/umd/react.development.js')
+        },
+        modules: [path.resolve(__dirname, 'node_modules')]
+    },
+    watch: true,
+    watchOptions: {
+        ignored: /node_modules/,
+        aggregateTimeout: 300,
+        poll: 1000
     },
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
-                exclude: /(node_modules | bower_components)/,
+                test: /\.(js)$/,
+                include: path.resolve(__dirname, 'src'),
                 use: "babel-loader"
             },
             {

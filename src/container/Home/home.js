@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 import styles from './index.less';
-import Result from '../result/result';
 import { cookie } from 'utilfunction';
 import { Map } from 'immutable';
 import { saveName } from '../../actions/HomeAction';

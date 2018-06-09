@@ -4,7 +4,7 @@ class Result extends React.Component {
   render(){
     console.log('result', this.props.match)
     return (
-      <div>result</div>
+      <div>result1】2</div>
     )
   }
 }

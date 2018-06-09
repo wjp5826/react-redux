@@ -7,7 +7,7 @@ class Result extends React.Component {
   render() {
     return (
       <div>
-        <h1>this is app component</h1>
+        <h1>this is app component 1</h1>
         {this.props.children}
       </div>
     )
