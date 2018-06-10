@@ -1,13 +1,14 @@
-var path = require('path');
-var webpack = require('webpack');
-var HtmlWebpackPlugin  = require('html-webpack-plugin');
-var autoprefixer = require('autoprefixer');
-var pxtorem = require('postcss-pxtorem');
-// 打开浏览器
-var OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin  = require('html-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+const pxtorem = require('postcss-pxtorem');
+const OpenBrowserPlugin = require('open-browser-webpack-plugin'); // 打开浏览器
+const PrepackWebpackPlugin = require('prepack-webpack-plugin').default;
+const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 
 module.exports = {
-    mode: 'development',
+    mode: 'development', // 开发模式，默认设置环境变量
     devtool: 'cheap-moudle-eval-source-map',
     entry: {
         app: ['webpack-dev-server/client?http://localhost:3011/', 'webpack/hot/dev-server','./src/entry.js'],
@@ -20,7 +21,6 @@ module.exports = {
         filename: '[name].[hash].js',
     },
     plugins : [
-        new webpack.NamedModulesPlugin(),
         new HtmlWebpackPlugin({
             title: 'react-redux',
             filename: '/index.html',
@@ -29,14 +29,21 @@ module.exports = {
         }),
         new OpenBrowserPlugin({ url: 'http://localhost:3011' }),
         new webpack.HotModuleReplacementPlugin(),
+        // Prepack 就是一个部分求值器，编译代码时提前将计算结果放到编译后的代码中，而不是在代码运行时才去求值。
+        // new PrepackWebpackPlugin(),
+         // 开启 Scope Hoisting
+        new ModuleConcatenationPlugin(),
     ],
     resolve: {
         alias: {
             constants: path.resolve(__dirname, 'src/constants'),
             react: path.resolve(__dirname, './node_modules/react/umd/react.development.js')
         },
-        modules: [path.resolve(__dirname, 'node_modules')]
+        modules: [path.resolve(__dirname, 'node_modules')], // 只从node_modules去寻找第三方
+        // 针对 Npm 中的第三方模块优先采用 jsnext:main 中指向的 ES6 模块化语法的文件
+        mainFields: ['jsnext:main', 'browser', 'main']
     },
+    // 文件监听配置，不监听 node_modules的文件
     watch: true,
     watchOptions: {
         ignored: /node_modules/,
