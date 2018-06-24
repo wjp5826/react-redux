@@ -25,7 +25,8 @@ module.exports = {
             title: 'react-redux',
             filename: '/index.html',
             template: 'index.html',
-            inject: 'body'
+            inject: 'body',
+            chunksSortMode: 'none',
         }),
         new OpenBrowserPlugin({ url: 'http://localhost:3011' }),
         new webpack.HotModuleReplacementPlugin(),
@@ -59,8 +60,39 @@ module.exports = {
             },
             {
                 test: /\.(less|css)$/,
-                exclude: /(node_modules | bower_components)/,
-                use: ['style-loader', 'css-loader', 'less-loader']
+                exclude: /(node_modules)/,
+                use: [
+                    {loader: "style-loader"},
+                    {
+                        loader: "css-loader",
+                        options: {
+                            importLoaders: 1,
+                            modules: true,
+                            localIdentName: '[path][name]_[local]-[hash:base64:5]',
+                        }
+                    },
+                    {
+                        loader: "postcss-loader",
+                        options: {
+                            ident: 'postcss',
+                            plugins: () => [
+                                autoprefixer({
+                                    browsers: [
+                                        '>1%',
+                                        'last 4 versions',
+                                        'Firefox ESR',
+                                        'not ie < 9'
+                                    ],
+                                    flexbox: 'no-2009',
+                                }),
+                                pxtorem({
+                                    rootValue: 100,
+                                    propWhiteList: [],
+                                })
+                            ]
+                        }
+                    }
+                ]
             },
             {
                 test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
@@ -74,32 +106,7 @@ module.exports = {
                     }
                 ]
             },
-            {
-                test: /\.css$/,
-                use: [
-                    { loader: 'style-loader' },
-                    { loader: 'css-loader', options: { importLoaders: 1, modules: true, localIdentName: '[path][name]_[local]--[hash:base64:5]' } },
-                    { 
-                        loader: 'postcss-loader',
-                        options : {
-                            ident: 'postcss',
-                            plugins: () => [
-                                autoprefixer({
-                                    browser: [
-                                        '>1%',
-                                        'last 4 versions',
-                                        'Firefox ESR',
-                                        'not ie < 9'
-                                    ],
-                                    flexbox: 'no-2009',
-                                }),
-                                pxtorem({ rootValue: 100, propWhiteList: [] }),
-                            ]
-                        }
-                    }
-                ]
-            }
         ]
     }
-}
+};
  

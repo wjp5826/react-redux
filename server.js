@@ -15,7 +15,7 @@ const server = new WebpackDevServer(compiler, {
     hot: true,
     compress: true,
     stats: "minimal",
-})
+});
 server.listen(3011, 'localhost', function(error){
     console.log(`start server by 3011`)
-})
+});

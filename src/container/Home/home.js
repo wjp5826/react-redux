@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
 import styles from './index.less';
-import { cookie } from 'utilfunction';
 import { Map } from 'immutable';
 import { saveName } from '../../actions/HomeAction';
 
@@ -41,9 +40,9 @@ class Home extends React.Component {
 }
 const Second = () => {
     return <div>second</div>
-}
+};
 const Third = () => {
     return <div>third</div>
-}
+};
 
 export default Home;
