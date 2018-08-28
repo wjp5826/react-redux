@@ -30,10 +30,10 @@ class Home extends React.Component {
                 <ul>
                     <li><Link to={`/home/one`}>link1</Link></li>
                     <li><Link to={`/second`}>to res</Link></li>
-                    <li><Link to={`${this.props.match.url}/third`}>link2</Link></li>
+                    {/*<li><Link to={`${this.props.match.url}/third`}>link2</Link></li>*/}
                 </ul>
                 <Route path={`/home/one`} component={Second} />
-                <Route path={`${this.props.match.url}/third`} component={Third} />
+                {/*<Route path={`${this.props.match.url}/third`} component={Third} />*/}
             </div>
         )
     }

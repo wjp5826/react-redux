@@ -4,6 +4,8 @@ import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createHashHistory';
 import App from './container/app';
 import Loadable from 'react-loadable';
+import AuthLogin from './container/AuthLogin';
+import Login from './container/Login/login';
 
 const Home = Loadable({
     loader: () => import(/* webpackChunkName: "Home" */ './container/Home/home'),
@@ -28,8 +30,10 @@ class Routers extends React.Component {
                 <App>
                     <Switch>
                         <Route exact path="/" render={() => (<Redirect to="/home" />)} />
-                        <Route path="/home" component={Home} />
+                        <AuthLogin path="/home" component={Home} />
+                        {/*<Route path="/home" component={Home} />*/}
                         <Route path="/second" component={Result} />
+                        <Route path="/login" component={Login} />
                     </Switch>
                 </App>
             </HashRouter>
